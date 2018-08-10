@@ -3,12 +3,12 @@ import 'firebase/auth';
 import 'firebase/database';
 
 const config = {
-    apiKey: "AIzaSyAUetLv1LoJA6d8xS2VME8r8w5wZSH8ttE",
-    authDomain: "react-firebase-authentic-345f1.firebaseapp.com",
-    databaseURL: "https://react-firebase-authentic-345f1.firebaseio.com",
-    projectId: "react-firebase-authentic-345f1",
-    storageBucket: "react-firebase-authentic-345f1.appspot.com",
-    messagingSenderId: "276335862691"
+        apiKey: "AIzaSyBERJliCpaLN9ISU6fg6Cd7FxY20sriPwI",
+        authDomain: "fir-test-1653a.firebaseapp.com",
+        databaseURL: "https://fir-test-1653a.firebaseio.com",
+        projectId: "fir-test-1653a",
+        storageBucket: "fir-test-1653a.appspot.com",
+        messagingSenderId: "615265698397"
 };
 
 if (!firebase.apps.length) {
