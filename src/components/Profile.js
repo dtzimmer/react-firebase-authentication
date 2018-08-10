@@ -19,7 +19,8 @@ const ProfilePage = ({history}) =>
 const INITIAL_STATE = {
     username: '',
     error: null,
-    showAuth: false
+    showAuth: false,
+    profile: ''
 };
 
 const byPropKey = (propertyName, value) => () => ({
@@ -33,19 +34,11 @@ class ProfileForm extends Component {
     }
 
     onSubmit = (event) => {
-        const {profile}
-         = this.state;
-        console.log(profile)
-
-
         this.setState({showAuth: true});
         event.preventDefault();
     }
 
     render() {
-        const {
-            history,
-        } = this.props;
 
         const {
             profile
@@ -70,9 +63,9 @@ class ProfileForm extends Component {
                 {this.state.showAuth && (
                     <AuthUserContext.Consumer>
                         {authUser =>{
-                            console.log(authUser)
                             db.doUpdateProfile(authUser.uid, profile)
                                 .then(() => {
+                            this.setState({ ...INITIAL_STATE });
                                 })
                                 .catch(error => {
                                     this.setState(byPropKey('error', error));
