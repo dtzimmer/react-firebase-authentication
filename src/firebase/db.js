@@ -79,19 +79,15 @@ export const onceGetUsers = () =>
 //AAAAAAAAAAAAAAAAAAAA
 
 export const onceGetProfileKey = async (parentUser) => {
-    await db.ref(`users/${parentUser}/profileKey`).once('value')
-        .then(snapshot => {
-            console.log(snapshot.val())
-                return (
-                    snapshot.val()
-                )
-            }
-        )
+    const profileKey = (await db.ref(`users/${parentUser}/profileKey`).once('value')).val()
+    // const profileKey = snapshot.val()
+
+    return await onceGetProfileByKey(profileKey)
 }
 
 export const onceGetProfileByKey = async (profileKey) => {
 
-    await db.ref(`profiles/${profileKey}/profile`).once('value')
+    return await db.ref(`profiles/${profileKey}/profile`).once('value')
         .then(snapshot => {
                 console.log(snapshot.val())
                 return (

@@ -56,6 +56,12 @@ class ProfileForm extends Component {
         event.preventDefault();
     }
 
+
+    async componentDidMount() {
+        const value = await db.onceGetProfileKey(this.state.userId)
+        this.state.currentProfile = value;
+    }
+
     render() {
 
         //create a boolean as to whether a profile has been entered to validate whether writing it is a good idea
@@ -76,7 +82,7 @@ class ProfileForm extends Component {
                     Submit
                 </button>
             </form>
-
+                <p>{this.state.currentProfile}</p>
                 {/*This code pulls in the authUser from our higher order component AuthUserContext and puts the userId
                 in state because we want to use it in our onSubmit*/}
 
@@ -86,8 +92,6 @@ class ProfileForm extends Component {
                             return null
                         }}
                     </AuthUserContext.Consumer>
-
-                {console.log(db.onceGetProfileKey(this.state.userId))}
 
             </div>
         );
