@@ -75,7 +75,28 @@ export const doUpdateProfile = async (parentUser, profile) => {
 export const onceGetUsers = () =>
     db.ref('users').once('value');
 
-//Yeah... this isn't working
+//Yeah... this isn't working. It's the same damn code as above and I can't even get the profileKey let alone the profile
+//AAAAAAAAAAAAAAAAAAAA
 
-export const onceGetProfile =  (id) =>
-    db.ref(`profiles/${id}/profile`).once('value');
+export const onceGetProfileKey = async (parentUser) => {
+    await db.ref(`users/${parentUser}/profileKey`).once('value')
+        .then(snapshot => {
+            console.log(snapshot.val())
+                return (
+                    snapshot.val()
+                )
+            }
+        )
+}
+
+export const onceGetProfileByKey = async (profileKey) => {
+
+    await db.ref(`profiles/${profileKey}/profile`).once('value')
+        .then(snapshot => {
+                console.log(snapshot.val())
+                return (
+                    snapshot.val()
+                )
+            }
+        )
+}

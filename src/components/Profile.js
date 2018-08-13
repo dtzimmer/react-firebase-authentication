@@ -12,7 +12,7 @@ const ProfilePage = ({history}) =>
     <div>
         <h1>Profile</h1>
         <ProfileForm history={history} />
-        <div>{curProfile}</div>
+        {/*<p>{curProfile}</p>*/}
     </div>
 
 //Our initial state
@@ -20,7 +20,8 @@ const ProfilePage = ({history}) =>
 const INITIAL_STATE = {
     error: null,
     showAuth: false,
-    profile: ''
+    profile: '',
+    userId: null
 };
 
 //Our versatile handler to put profile into state as it's typed into the input
@@ -29,9 +30,9 @@ const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
 });
 
-//Yep, this isn't working
+const currentProfile = async(id) => (
+    await db.onceGetProfileKey(id))
 
-const curProfile = db.onceGetProfile;
 
 //This class contains our profile input form
 
@@ -41,12 +42,17 @@ class ProfileForm extends Component {
         this.state = { ...INITIAL_STATE };
     }
 
-    //There's a little magic going on here. As David explained any <tag> has to live in a return. We need
-    // <AuthUserContext.Consumer> to get user ID so that we can write to db. So we put that code in the return
-    //and have it only execute when showAuth == true
+    //This is our form's onSubmit. It calls db.doUpdateProfile which actually handles updates and creates.
+    //Then we setState back to initial state to clear the form. Errors are caught and we preventDefault.
 
     onSubmit = (event) => {
-        this.setState({showAuth: true});
+        db.doUpdateProfile(this.state.userId, this.state.profile)
+            .then(() => {
+                // this.setState({ ...INITIAL_STATE });
+            })
+            .catch(error => {
+                this.setState(byPropKey('error', error));
+            })
         event.preventDefault();
     }
 
@@ -71,23 +77,18 @@ class ProfileForm extends Component {
                 </button>
             </form>
 
-                {/*Here's the magic mentioned above, we use <AuthUserContext.Consumer> to get the authUser token
-                and call db.doUpdateProfile. After that setState to initial state to clear the form*/}
+                {/*This code pulls in the authUser from our higher order component AuthUserContext and puts the userId
+                in state because we want to use it in our onSubmit*/}
 
-                {this.state.showAuth && (
                     <AuthUserContext.Consumer>
                         {authUser =>{
-                            db.doUpdateProfile(authUser.uid, this.state.profile)
-                                .then(() => {
-                            this.setState({ ...INITIAL_STATE });
-                                })
-                                .catch(error => {
-                                    this.setState(byPropKey('error', error));
-                                })
+                            this.state.userId = authUser.uid
                             return null
                         }}
                     </AuthUserContext.Consumer>
-                )}
+
+                {console.log(db.onceGetProfileKey(this.state.userId))}
+
             </div>
         );
     }
