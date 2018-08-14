@@ -3,13 +3,13 @@ import { withRouter } from 'react-router-dom'
 
 import { SignUpLink } from './SignUp'
 import { PasswordForgetLink } from './PasswordForget'
-import { auth } from '../configuration/firebase'
+import { auth } from '../firebase'
 import * as routes from '../constants/routes'
 
 const SignInPage = ({ history }) =>  //all components here render between the divs.
   <div>
     <h1>Log In</h1>
-    <SignInForm history={ history } />
+    <SignInForm history={history} />
     <PasswordForgetLink />
     <SignUpLink />
   </div>
@@ -25,6 +25,12 @@ const INITIAL_STATE = {
 }
 
 class SignInForm extends Component {
+  constructor(props) {//why are there props here?
+    super(props)
+
+    this.state = { ...INITIAL_STATE } //changes the initial state here
+  }
+
   onSubmit = (event) => {
     const {
       email,
@@ -47,12 +53,6 @@ class SignInForm extends Component {
     event.preventDefault()
   }
 
-  constructor(props) {//why are there props here?
-    super(props)
-
-    this.state = { ...INITIAL_STATE } //changes the initial state here
-  }
-
   render() {
     const {
       email,
@@ -65,24 +65,24 @@ class SignInForm extends Component {
       email === ''
 //below is the form with the inputs.
     return (
-      <form onSubmit={ this.onSubmit }>
+      <form onSubmit={this.onSubmit}>
         <input
-          value={ email }
-          onChange={ event => this.setState(byPropKey('email', event.target.value)) }
+          value={email}
+          onChange={event => this.setState(byPropKey('email', event.target.value))}
           type="text"
           placeholder="Email Address"
         />
         <input
-          value={ password }
-          onChange={ event => this.setState(byPropKey('password', event.target.value)) }
+          value={password}
+          onChange={event => this.setState(byPropKey('password', event.target.value))}
           type="password"
           placeholder="Password"
         />
-        <button disabled={ isInvalid } type="submit">
+        <button disabled={isInvalid} type="submit">
           Sign In
         </button>
 
-        { error && <p>{ error.message }</p> }
+        {error && <p>{error.message}</p>}
       </form>
     )
   }
