@@ -6,18 +6,18 @@ import { PasswordForgetLink } from './PasswordForget';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
 
-const SignInPage = ({ history }) =>
+const SignInPage = ({ history }) =>  //all components here render between the divs.
     <div>
         <h1>Log In</h1>
         <SignInForm history={history} />
         <PasswordForgetLink />
         <SignUpLink />
     </div>
-
-const byPropKey = (propertyName, value) => () => ({
+// not 100% on what the history does above
+const byPropKey = (propertyName, value) => () => ({  //don't know what this is
     [propertyName]: value,
 });
-
+// initialize the state with empty email, password string and set error to null so that it doesn't register an error
 const INITIAL_STATE = {
     email: '',
     password: '',
@@ -25,29 +25,29 @@ const INITIAL_STATE = {
 };
 
 class SignInForm extends Component {
-    constructor(props) {
+    constructor(props) {//why are there props here?
         super(props);
 
-        this.state = { ...INITIAL_STATE };
+        this.state = { ...INITIAL_STATE }; //changes the initial state here
     }
 
     onSubmit = (event) => {
         const {
             email,
             password,
-        } = this.state;
+        } = this.state;  //When the submit button is pushed, it is changed here
 
         const {
             history,
-        } = this.props;
+        } = this.props; //not sure how this history thing is working. see line 47 too.
 
         auth.doSignInWithEmailAndPassword(email, password)
             .then(() => {
-                this.setState({ ...INITIAL_STATE });
-                history.push(routes.HOME);
+                this.setState({ ...INITIAL_STATE }); //this will set the state and route you to home after Google has handled authentication
+                history.push(routes.HOME);//this is where the history thing is again
             })
             .catch(error => {
-                this.setState(byPropKey('error', error));
+                this.setState(byPropKey('error', error)); //this catches any kind of error with the signing in. Not sure what byPropKey is.
             });
 
         event.preventDefault();
@@ -56,14 +56,14 @@ class SignInForm extends Component {
     render() {
         const {
             email,
-            password,
+            password,//not sure what's going on here. Is it just passing up these? Are they props?
             error,
         } = this.state;
 
         const isInvalid =
-            password === '' ||
+            password === '' ||//does not allow password or email to be empty
             email === '';
-
+//below is the form with the inputs.
         return (
             <form onSubmit={this.onSubmit}>
                 <input
@@ -87,9 +87,11 @@ class SignInForm extends Component {
         );
     }
 }
-
+//if signin is invalid, the button will be disabled because invalid will be set to true
+//What is byPropKey again on line 71 and 77
 export default withRouter(SignInPage);
 
 export {
     SignInForm,
 };
+//what's this export SignInForm?
