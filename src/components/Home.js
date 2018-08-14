@@ -11,7 +11,7 @@ class HomePage extends Component {
 
   async componentDidMount() {
 
-    base.bindToState('users', {
+   await base.bindToState('users', {
       context: this,
       state: 'users',
       withRefs: true,
