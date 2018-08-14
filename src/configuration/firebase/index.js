@@ -1,6 +1,6 @@
 // import * as auth from './auth'
 import firebase from 'firebase/app'
-import Rebase from 're-base'
+import Rebase from 're-base' // https://github.com/tylermcginnis/re-base
 
 import 'firebase/auth'
 import 'firebase/database'
