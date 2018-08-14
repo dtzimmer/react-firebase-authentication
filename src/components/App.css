@@ -1,4 +1,4 @@
-body{
+body {
   margin: 10px;
   background: deepskyblue;
 }
@@ -10,7 +10,7 @@ img {
   width: 50%;
 }
 
-p{
+p {
   text-align: center;
 }
 
@@ -30,7 +30,7 @@ a:hover {
   color: black;
 }
 
-nav{
+nav {
   background: whitesmoke;
   border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -53,11 +53,10 @@ button {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-
 button:hover {
   background-color: deepskyblue;
   border-color: white;
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
   color: white;
   text-decoration: none;
 }
@@ -74,6 +73,6 @@ form {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-input{
+input {
   margin: 2%;
 }
