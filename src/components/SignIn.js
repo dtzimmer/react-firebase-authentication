@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom'
 
 import { SignUpLink } from './SignUp'
 import { PasswordForgetLink } from './PasswordForget'
-import { auth } from '../configuration/firebase'
 import * as routes from '../constants/routes'
+import {doSignInWithEmailAndPassword} from '../configuration/firebase/index'
 
 const SignInPage = ({ history }) =>  //all components here render between the divs.
   <div>
@@ -41,7 +41,7 @@ class SignInForm extends Component {
       history,
     } = this.props //not sure how this history thing is working. see line 47 too.
 
-    auth.doSignInWithEmailAndPassword(email, password)
+    doSignInWithEmailAndPassword(email, password)
         .then(() => {
           this.setState({ ...INITIAL_STATE }) //this will set the state and route you to home after Google has handled authentication
           history.push(routes.HOME)//this is where the history thing is again

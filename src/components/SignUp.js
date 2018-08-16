@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-
 import { auth, db } from '../configuration/firebase'
-
+import {doCreateUserWithEmailAndPassword} from '../configuration/firebase/index'
 import * as routes from '../constants/routes'
 
 const SignUpPage = ({ history }) =>
@@ -35,7 +34,7 @@ class SignUpForm extends Component {
       history,
     } = this.props
 
-    auth.doCreateUserWithEmailAndPassword(email, passwordOne)
+    doCreateUserWithEmailAndPassword(email, passwordOne)
         .then(authUser => {
 
           // Create a user in your own accessible Firebase Database too

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-
-import { auth } from '../configuration/firebase'
+import {doPasswordUpdate} from '../configuration/firebase/index'
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -16,7 +15,7 @@ class PasswordChangeForm extends Component {
   onSubmit = (event) => {
     const { passwordOne } = this.state
 
-    auth.doPasswordUpdate(passwordOne)
+    doPasswordUpdate(passwordOne)
         .then(() => {
           this.setState({ ...INITIAL_STATE })
         })
