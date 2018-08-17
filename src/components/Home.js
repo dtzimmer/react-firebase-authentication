@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import withAuthorization from './withAuthorization'
-import { db, base } from '../configuration/firebase'
+import { base } from '../configuration/firebase'
 
 class HomePage extends Component {
 

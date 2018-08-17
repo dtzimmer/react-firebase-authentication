@@ -4,6 +4,7 @@ import { db } from '../configuration/firebase'
 import * as routes from '../constants/routes'
 import withAuthorization from './withAuthorization'
 import { Link } from 'react-router-dom'
+import { base } from '../configuration/firebase'
 
 //This is what will ultimately be exported, a header, form and div containing the current profile.
 //The last part is broken and not displaying the current profile
@@ -36,6 +37,16 @@ const currentProfile = async (id) => (
 //This class contains our profile input form
 
 class ProfileForm extends Component {
+
+  async componentDidMount() {
+
+    await base.bindToState('users', {
+      context: this,
+      state: 'users',
+      withRefs: true,
+      asArray: true
+    })
+    
   onSubmit = (event) => {
     db.doUpdateProfile(this.state.userId, this.state.profile)
       .then(() => {
