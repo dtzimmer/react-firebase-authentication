@@ -13,6 +13,7 @@ import PasswordForgetPage from './PasswordForget'
 import HomePage from './Home'
 import AccountPage from './Account'
 import ProfilePage from './Profile'
+import Test from './Test'
 
 import * as routes from '../constants/routes'
 import withAuthentication from './withAuthentication'
@@ -30,7 +31,7 @@ const App = () =>
       <Route exact path={ routes.PASSWORD_FORGET } component={ () => <PasswordForgetPage /> } />
       <Route exact path={ routes.HOME } component={ () => <HomePage /> } />
       <Route exact path={ routes.ACCOUNT } component={ () => <AccountPage /> } />
-      <Route exact path={ routes.PROFILE } component={ () => <ProfilePage /> } />
+      <Route exact path={ routes.TEST } component={ () => <Test /> } />
     </div>
   </Router>
 

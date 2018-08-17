@@ -18,7 +18,7 @@ const NavigationAuth = () =>
     <button><Link to={ routes.LANDING }>Landing</Link></button>
     <button><Link to={ routes.HOME }>Home</Link></button>
     <button><Link to={ routes.ACCOUNT }>Account</Link></button>
-    <button><Link to={ routes.PROFILE }>Profile</Link></button>
+    <button><Link to={ routes.TEST }>Test</Link></button>
     <SignOutButton />
   </nav>
 
