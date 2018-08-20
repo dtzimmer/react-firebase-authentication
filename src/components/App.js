@@ -32,6 +32,7 @@ const App = () =>
       <Route exact path={ routes.HOME } component={ () => <HomePage /> } />
       <Route exact path={ routes.ACCOUNT } component={ () => <AccountPage /> } />
       <Route exact path={ routes.TEST } component={ () => <Test /> } />
+      <Route exact path={ routes.PROFILE } component={ProfilePage} />
     </div>
   </Router>
 

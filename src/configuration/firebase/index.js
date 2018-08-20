@@ -43,6 +43,20 @@ export const doPasswordReset = (email) =>
 export const doPasswordUpdate = (password) =>
   auth.currentUser.updatePassword(password);
 
+export const updateProfile = (userId, profile) => {
+  return base.update('profiles/' + userId, {
+    data: {profile: profile}
+  })
+}
+
+export const getProfiles = (userId) => {
+  const endpoint = 'profiles/' + userId;
+  console.log('fetching from', endpoint);
+  return base.fetch(endpoint, {
+    context: this
+  })
+}
+
 export {
   auth,
   db,

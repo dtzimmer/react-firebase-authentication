@@ -30,4 +30,4 @@ class Test extends Component {
 
 const authCondition = (authUser) => !!authUser
 
-export default withAuthorization(authCondition)(Test)
+export default withAuthorization(authCondition, Test)

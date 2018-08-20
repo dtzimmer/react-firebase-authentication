@@ -9,15 +9,23 @@ const withAuthentication = (Component) =>
       super(props)
 
       this.state = {
-        authUser: null,
+        authUser: null
+      }
+      this.setAuthentication = this.setAuthentication.bind(this);
+    }
+
+    setAuthentication(authUser){
+      if(authUser){
+        this.setState({ authUser: authUser })
+      }
+      else{
+        this.setState({ authUser: null })
       }
     }
 
     componentDidMount() {
       auth.onAuthStateChanged(authUser => {
-        authUser
-          ? this.setState({ authUser })
-          : this.setState({ authUser: null })
+        this.setAuthentication(authUser);
       })
     }
 
@@ -26,7 +34,7 @@ const withAuthentication = (Component) =>
 
       return (
         <AuthUserContext.Provider value={ authUser }>
-          <Component />
+          <Component/>
         </AuthUserContext.Provider>
       )
     }
