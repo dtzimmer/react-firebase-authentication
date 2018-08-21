@@ -1,7 +1,6 @@
-// import * as auth from './auth'
 import firebase from 'firebase/app'
 import Rebase from 're-base' // https://github.com/tylermcginnis/re-base
-
+import Timestamp from 'firebase-firestore-timestamp'
 import 'firebase/auth'
 import 'firebase/database'
 import 'firebase/firestore'
@@ -44,8 +43,10 @@ export const doPasswordUpdate = (password) =>
   auth.currentUser.updatePassword(password);
 
 export const updateProfile = (userId, profile) => {
+  const time = Timestamp.now()
+  const timestamp = new Timestamp(time.seconds, time.nanoseconds)
   return base.update('profiles/' + userId, {
-    data: {profile: profile}
+    data: {profile: profile, timestamp: timestamp}
   })
 }
 
@@ -55,6 +56,15 @@ export const getProfiles = (userId) => {
   return base.fetch(endpoint, {
     context: this
   })
+}
+
+export const getOldestProfile = () => {
+  return base.fetch('profiles', {
+    queries: {
+      orderByChild: 'timestamp',
+      limitToLast: 1
+    }
+  });
 }
 
 export {

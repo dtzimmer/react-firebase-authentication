@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "firebase": "^5.3.0",
+    "firebase-firestore-timestamp": "^1.0.4",
     "re-base": "^4.0.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
