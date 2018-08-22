@@ -50,6 +50,14 @@ export const updateProfile = (userId, profile) => {
   })
 }
 
+export const updateProfileTimeStamp = (profileId) => {
+  const time = Timestamp.now()
+  const timestamp = new Timestamp(time.seconds, time.nanoseconds)
+  return base.update('profiles/' + profileId, {
+    data: { timestamp: timestamp}
+  })
+}
+
 export const getProfiles = (userId) => {
   const endpoint = 'profiles/' + userId;
   console.log('fetching from', endpoint);

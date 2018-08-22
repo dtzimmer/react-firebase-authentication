@@ -2902,6 +2902,10 @@ find-up@^2.0.0, find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
+firebase-firestore-timestamp@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/firebase-firestore-timestamp/-/firebase-firestore-timestamp-1.0.4.tgz#4e4e2a0e2d71a9b19ca261aae85c5bb5d2631609"
+
 firebase@^5.3.0:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/firebase/-/firebase-5.3.1.tgz#99df1a9b101d12cd765ef010bb015fdb0b76850b"
