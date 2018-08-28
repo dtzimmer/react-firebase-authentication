@@ -66,13 +66,38 @@ export const getProfiles = (userId) => {
   })
 }
 
-export const getOldestProfile = () => {
-  return base.fetch('profiles', {
+export const createComment = (comment, profileId) => {
+  return base.update('comments/' + profileId, {
+    data: {comment: comment}
+  })
+}
+
+export const getProfileById = async (profileId) => {
+  console.log('get ' + profileId)
+  const response = await base.fetch('profiles/' + profileId, {
+    context: this
+  })
+  console.log(response)
+  return response.profile
+}
+
+export const getCommentById = async (commentId) => {
+  const response = await base.fetch('comments/' + commentId, {
+    context: this
+  })
+  console.log(response)
+  return response.comment
+}
+
+export const getOldestProfile = async () => {
+  const response = await base.fetch('profiles', {
     queries: {
-      orderByChild: 'timestamp',
-      limitToLast: 1
+      orderByChild: 'timestamp/seconds',
+      limitToFirst: 1
     }
   });
+
+  return Object.keys(response).reduce((prev, current) => current)
 }
 
 export {

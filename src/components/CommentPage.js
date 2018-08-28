@@ -1,30 +1,45 @@
 import React, { Component } from 'react'
 import withAuthorization from './withAuthorization'
-import { base, db, getOldestProfile, updateProfile } from '../configuration/firebase'
+import {
+  base,
+  db,
+  getOldestProfile,
+  updateProfileTimeStamp,
+  createComment,
+  getProfileById,
+  getCommentById
+} from '../configuration/firebase'
 
 const INITIAL_STATE = {
   error: null,
-  comment: ''
+  comment: '',
+  parentProfile: '',
+  parentProfileId: '',
+  previousComment: ''
 }
 
 class CommentPage extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { ...INITIAL_STATE };
+    this.state = { ...INITIAL_STATE }
   }
-//We need to retrieve the oldest profile from the queue
-  onSubmit = (event, profileId, comment) => {
-    event.preventDefault()
-    console.log('testing comment submit', db);
-    createComment(comment, profileId)
-      .then(() => {
-        this.updateProfileTimeStamp(profileId);
-      })
-      .catch(error => {
-        this.setState({error: error})
-      })
+
+  async componentDidMount() {
+    await getOldestProfile().then(value => {
+      this.setState({parentProfileId: value});
+          })
+    console.log(this.state.parentProfileId)
+    this.setState({parentProfile: await getProfileById(this.state.parentProfileId)})
+    console.log(this.state.parentProfile)
+    this.setState({previousComment: await getCommentById(this.state.parentProfileId)})
+    updateProfileTimeStamp(this.state.parentProfileId)
   }
+
+  onSubmit(){
+    createComment(this.state.comment, this.state.parentProfileId)
+  }
+
 
   render() {
     const isInvalid =
@@ -33,18 +48,19 @@ class CommentPage extends Component {
     return (
       <div>
         <h1>Comment Page</h1>
-        <form onSubmit={ (e) => this.onSubmit(e, this.state.profileId, this.state.comment) }>
-        <input
-          value={ this.state.comment }
-          onChange={ event => this.setState({comment: event.target.value}) }
-          type="text"
-          placeholder="Comment goes here"
-        />
-          <button disabled={ isInvalid } type="submit">
+        <h2>{this.state.parentProfile}</h2>
+        <p>{this.state.previousComment}</p>
+        <form onSubmit={(e) => this.onSubmit(e)}>
+          <input
+            value={this.state.comment}
+            onChange={event => this.setState({ comment: event.target.value })}
+            type="text"
+            placeholder="Comment goes here"
+          />
+          <button disabled={isInvalid} type="submit">
             Submit
           </button>
         </form>
-
 
 
       </div>

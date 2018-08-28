@@ -13,6 +13,7 @@ import PasswordForgetPage from './PasswordForget'
 import HomePage from './Home'
 import AccountPage from './Account'
 import ProfilePage from './Profile'
+import CommentPage from './CommentPage'
 import Test from './Test'
 
 import * as routes from '../constants/routes'
@@ -33,6 +34,7 @@ const App = () =>
       <Route exact path={ routes.ACCOUNT } component={ () => <AccountPage /> } />
       <Route exact path={ routes.TEST } component={ () => <Test /> } />
       <Route exact path={ routes.PROFILE } component={ProfilePage} />
+      <Route exact path={ routes.COMMENT } component={CommentPage} />
     </div>
   </Router>
 

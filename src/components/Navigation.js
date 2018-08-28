@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import AuthUserContext from './AuthUserContext'
 import SignOutButton from './SignOut'
 import * as routes from '../constants/routes'
-import { ProfileLink } from './Profile';
 
 const Navigation = () =>
   <AuthUserContext.Consumer>
@@ -21,6 +20,7 @@ const NavigationAuth = () =>
     <button><Link to={ routes.ACCOUNT }>Account</Link></button>
     <button><Link to={ routes.TEST }>Test</Link></button>
     <button><Link to={ routes.PROFILE }>Profile</Link></button>
+    <button><Link to={ routes.COMMENT }>Comment</Link></button>
     <SignOutButton />
   </nav>
 
