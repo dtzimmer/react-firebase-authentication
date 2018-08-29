@@ -60,7 +60,6 @@ class CommentPage extends Component {
           </button>
         </form>
 
-
       </div>
 
     )
