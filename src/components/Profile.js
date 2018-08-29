@@ -57,8 +57,13 @@ class ProfilePage extends React.Component {
   }
 
   makeAPH() {
-    const placeHolders = ['Make a joke or something!', 'Be wicked serious.', 'Bring your best!', 'Uhm.. Do I know you?']
-    this.setState({placeHolder: placeHolders[Math.floor(Math.random() * placeHolders.length)]})
+    const placeHolders = [
+      'Make a joke or something!', 'Be wicked serious.', 'Bring your best!', 'Uhm.. Do I know you?',
+      'This town ain\'t small enough for one of us \'pardner?', 'C\'mon what yo momma got?', 'You\'re a total scrub!!',
+      '12 pool = (opponent) => {return earlyPressuredOpponent}', 'cannons = (opponent) => {return earlyPressuredOpponent}',
+      'The graphics are actually ok in this game.', 'Choose what makes you happy!', 'Is there such a thing as a good critic?',
+      '63 |       \'Use an extra } to break this line!\', }]']
+    return placeHolders[Math.floor(Math.random() * placeHolders.length)]
   }
 
   async getProfile(userId) {
@@ -76,13 +81,14 @@ class ProfilePage extends React.Component {
     return (
 
       <div>
-        <h1>Profile</h1>
+        <h1>Profile:</h1>
         <form onSubmit={(e) => this.onSubmit(e, this.props.authUser.uid, this.state.profile)}>
+          <p>The more you update your profile, the more fun SAMP is!</p>
           <input
             value={this.state.profile}
             onChange={event => this.setState({ profile: event.target.value })}
             type="text"
-            placeholder={this.state.placeHolder}
+            placeholder={this.makeAPH()}
           />
 
           <button disabled={isInvalid} type="submit">

@@ -98,7 +98,7 @@ export const getOldestProfile = async (currentUser) => {
       limitToFirst: 1
     }
   });
-
+//It'd be fun to remind the user to update their profie if they're returned a profile with id == currentUser
   return Object.keys(response).reduce((prev, current) => current)
 }
 

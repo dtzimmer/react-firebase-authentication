@@ -18,9 +18,6 @@ class HomePage extends Component {
       asArray: true
     })
 
-    // db.onceGetUsers().then(snapshot =>
-    //   this.setState({ users: snapshot.val() })
-    // )
   }
 
   render() {
@@ -29,8 +26,6 @@ class HomePage extends Component {
     return (
       <div className="background">
         <h1>Home</h1>
-        <p>The Home Page is accessible by every signed in user.</p>
-
         { !!users && <UserList users={ users } /> }
       </div>
     )
@@ -39,8 +34,8 @@ class HomePage extends Component {
 
 const UserList = ({ users }) =>
   <div>
-    <h2>List of Usernames of Users</h2>
-    <p>(Saved on Sign Up in Firebase Database)</p>
+    <h2>Welcome to Smile At My Profile!</h2>
+    <p>This is a place to have fun, share ideas, and to laugh! Be nice, ok?</p>
 
     { Object.keys(users).map(key =>
       <div key={ key }>{ users[key].username }</div>
