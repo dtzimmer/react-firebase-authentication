@@ -24,7 +24,7 @@ class CommentPage extends Component {
   }
 
   async componentDidMount() {
-    await getOldestProfile().then(value => {
+    await getOldestProfile(this.props.authUser.uid).then(value => {
       this.setState({ parentProfileId: value })
     })
     this.setState({ parentProfile: await getProfileById(this.state.parentProfileId) })

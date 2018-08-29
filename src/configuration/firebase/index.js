@@ -91,7 +91,7 @@ export const getCommentById = async (commentId) => {
   return response.comment
 }
 
-export const getOldestProfile = async () => {
+export const getOldestProfile = async (currentUser) => {
   const response = await base.fetch('profiles', {
     queries: {
       orderByChild: 'timestamp/seconds',

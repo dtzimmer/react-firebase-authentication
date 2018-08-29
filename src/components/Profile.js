@@ -19,6 +19,7 @@ const INITIAL_STATE = {
   showAuth: false,
   profile: '',
   currentProfile: ''
+
 }
 
 class ProfilePage extends React.Component {
@@ -34,6 +35,7 @@ class ProfilePage extends React.Component {
   async componentDidMount() {
     await this.getProfile(this.props.authUser.uid)
     await this.getComment(this.props.authUser.uid)
+    this.makeAPH()
   }
 
   onSubmit = (event, userId, profile) => {
@@ -54,6 +56,11 @@ class ProfilePage extends React.Component {
     this.setState({ comment: await getCommentById(userId) })
   }
 
+  makeAPH() {
+    const placeHolders = ['Make a joke or something!', 'Be wicked serious.', 'Bring your best!', 'Uhm.. Do I know you?']
+    this.setState({placeHolder: placeHolders[Math.floor(Math.random() * placeHolders.length)]})
+  }
+
   async getProfile(userId) {
     const profile = await getProfiles(userId)
     this.setState({
@@ -67,6 +74,7 @@ class ProfilePage extends React.Component {
       this.state.profile === ''
 
     return (
+
       <div>
         <h1>Profile</h1>
         <form onSubmit={(e) => this.onSubmit(e, this.props.authUser.uid, this.state.profile)}>
@@ -74,7 +82,7 @@ class ProfilePage extends React.Component {
             value={this.state.profile}
             onChange={event => this.setState({ profile: event.target.value })}
             type="text"
-            placeholder="Profile goes here"
+            placeholder={this.state.placeHolder}
           />
 
           <button disabled={isInvalid} type="submit">
