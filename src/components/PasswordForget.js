@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { auth } from '../configuration/firebase'
 import {doPasswordReset} from '../configuration/firebase/index'
 
 const PasswordForgetPage = () =>

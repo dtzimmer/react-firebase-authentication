@@ -42,6 +42,7 @@ export const doPasswordReset = (email) =>
 export const doPasswordUpdate = (password) =>
   auth.currentUser.updatePassword(password);
 
+// Update profile
 export const updateProfile = (userId, profile) => {
   const time = Timestamp.now()
   const timestamp = new Timestamp(time.seconds, time.nanoseconds)
@@ -50,6 +51,7 @@ export const updateProfile = (userId, profile) => {
   })
 }
 
+// Update Profile Timestamp
 export const updateProfileTimeStamp = (profileId) => {
   const time = Timestamp.now()
   const timestamp = new Timestamp(time.seconds, time.nanoseconds)
@@ -58,26 +60,27 @@ export const updateProfileTimeStamp = (profileId) => {
   })
 }
 
+// Get all profiles
 export const getProfiles = (userId) => {
   const endpoint = 'profiles/' + userId;
-  console.log('fetching from', endpoint);
   return base.fetch(endpoint, {
     context: this
   })
 }
 
+//Create a comment
 export const createComment = (comment, profileId) => {
   return base.update('comments/' + profileId, {
     data: {comment: comment}
   })
 }
 
+//Get a specific profile by its Id
 export const getProfileById = async (profileId) => {
   console.log('get ' + profileId)
   const response = await base.fetch('profiles/' + profileId, {
     context: this
   })
-  console.log(response)
   return response.profile
 }
 
@@ -85,7 +88,6 @@ export const getCommentById = async (commentId) => {
   const response = await base.fetch('comments/' + commentId, {
     context: this
   })
-  console.log(response)
   return response.comment
 }
 
@@ -98,6 +100,10 @@ export const getOldestProfile = async () => {
   });
 
   return Object.keys(response).reduce((prev, current) => current)
+}
+
+export const deleteComment = async (commentId) => {
+  base.remove('comments/' + commentId)
 }
 
 export {

@@ -1,17 +1,18 @@
 import React from 'react'
-import AuthUserContext from './AuthUserContext'
-import { db, updateProfile, getProfiles } from '../configuration/firebase'
+import {
+  db,
+  updateProfile,
+  getProfiles,
+  getCommentById,
+  updateProfileTimeStamp,
+  deleteComment
+} from '../configuration/firebase'
 import * as routes from '../constants/routes'
 import withAuthorization from './withAuthorization'
 import { Link } from 'react-router-dom'
 
 //This is what will ultimately be exported, a header, form and div containing the current profile.
 //The last part is broken and not displaying the current profile
-
-
-// const ProfilePage = (props) => (
-//   <ProfileForm {...props}/>
-// );
 
 const INITIAL_STATE = {
   error: null,
@@ -26,89 +27,64 @@ class ProfilePage extends React.Component {
 
   constructor(props) {
     super(props)
-    console.log('profile props', props);
-    this.state = { ...INITIAL_STATE };
+    console.log('profile props', props)
+    this.state = { ...INITIAL_STATE }
   }
 
   async componentDidMount() {
-    await this.getProfile(this.props.authUser.uid);
-
-    // Binding is optional, we may not always want to listen to the server???
-    // await base.bindToState('users', {
-    //   context: this,
-    //   state: 'users',
-    //   withRefs: true,
-    //   asArray: true
-    // });
-
-    //We don't want to load a profile on page load. We need the auth context to load
-    // const value = await db.onceGetProfileKey(this.state.userId)
-    // this.state.currentProfile = value
+    await this.getProfile(this.props.authUser.uid)
+    await this.getComment(this.props.authUser.uid)
   }
 
   onSubmit = (event, userId, profile) => {
-    //This should be on top in case of error, it wouldn't be hit
     event.preventDefault()
-    console.log('testing submit', db);
     updateProfile(userId, profile)
+    updateProfileTimeStamp(userId)
+    deleteComment(userId)
       .then(() => {
-        this.getProfile(userId);
+        this.getProfile(userId)
+        this.getComment(userId)
       })
       .catch(error => {
-        this.setState({error: error})
+        this.setState({ error: error })
       })
   }
 
-  async getProfile(userId){
-    const profile = await getProfiles(userId);
-    console.log('profile', profile);
+  async getComment(userId) {
+    this.setState({ comment: await getCommentById(userId) })
+  }
+
+  async getProfile(userId) {
+    const profile = await getProfiles(userId)
     this.setState({
       profile: '',
       currentProfile: profile.profile
-    });
-  }
-
-  refrest(userId){
-    this.getProfile(userId);
+    })
   }
 
   render() {
-    const { authUser } = this.props;
-    //create a boolean as to whether a profile has been entered to validate whether writing it is a good idea
     const isInvalid =
       this.state.profile === ''
 
     return (
       <div>
-        <form onSubmit={ (e) => this.onSubmit(e, this.props.authUser.uid, this.state.profile) }>
+        <h1>Profile</h1>
+        <form onSubmit={(e) => this.onSubmit(e, this.props.authUser.uid, this.state.profile)}>
           <input
-            value={ this.state.profile }
-            // Only need this if inputs are dynamic and need to be placed in state by id or something.
-            // onChange={ event => this.setState(byPropKey('profile', event.target.value)) }
-            onChange={ event => this.setState({profile: event.target.value}) }
+            value={this.state.profile}
+            onChange={event => this.setState({ profile: event.target.value })}
             type="text"
             placeholder="Profile goes here"
           />
 
-          <button disabled={ isInvalid } type="submit">
+          <button disabled={isInvalid} type="submit">
             Submit
           </button>
         </form>
-        <p>{this.state.currentProfile}</p>
-        { /*This code pulls in the authUser from our higher order component AuthUserContext and puts the userId
-                in state because we want to use it in our onSubmit*/ }
-
-        {/* https://reactjs.org/docs/context.html#consumer will explain how a consumer works */}
-        {/* The with auth already does this, STOP DUPLICATING
-          <AuthUserContext.Consumer>
-          { async (authUser) => {
-            this.state.userId = authUser.uid
-            return await this.getProfile();
-          } }
-        </AuthUserContext.Consumer> */}
-
-
-
+        <h3>Your current profile:</h3>
+        <p className="Box">{this.state.currentProfile}</p>
+        <h3>Comment left on your profile:</h3>
+        <p className="Box">{this.state.comment}</p>
       </div>
     )
   }
@@ -116,9 +92,7 @@ class ProfilePage extends React.Component {
 
 //a link to this page to be exported
 
-const ProfileLink = <Link to={ routes.PROFILE }>Profile</Link>
-
-//Yeah, no idea what this does
+const ProfileLink = <Link to={routes.PROFILE}>Profile</Link>
 
 const authCondition = (authUser) => !!authUser
 

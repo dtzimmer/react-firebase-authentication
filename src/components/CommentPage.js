@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import withAuthorization from './withAuthorization'
 import {
-  base,
-  db,
   getOldestProfile,
   updateProfileTimeStamp,
   createComment,
@@ -27,16 +25,14 @@ class CommentPage extends Component {
 
   async componentDidMount() {
     await getOldestProfile().then(value => {
-      this.setState({parentProfileId: value});
-          })
-    console.log(this.state.parentProfileId)
-    this.setState({parentProfile: await getProfileById(this.state.parentProfileId)})
-    console.log(this.state.parentProfile)
-    this.setState({previousComment: await getCommentById(this.state.parentProfileId)})
+      this.setState({ parentProfileId: value })
+    })
+    this.setState({ parentProfile: await getProfileById(this.state.parentProfileId) })
+    this.setState({ previousComment: await getCommentById(this.state.parentProfileId) })
     updateProfileTimeStamp(this.state.parentProfileId)
   }
 
-  onSubmit(){
+  onSubmit() {
     createComment(this.state.comment, this.state.parentProfileId)
   }
 
@@ -48,8 +44,10 @@ class CommentPage extends Component {
     return (
       <div>
         <h1>Comment Page</h1>
-        <h2>{this.state.parentProfile}</h2>
-        <p>{this.state.previousComment}</p>
+        <h3>Please leave a comment for this profile:</h3>
+        <p className="Box" >{this.state.parentProfile}</p>
+        <h3>Make it better than the last comment!</h3>
+        <p className="Box" >{this.state.previousComment}</p>
         <form onSubmit={(e) => this.onSubmit(e)}>
           <input
             value={this.state.comment}

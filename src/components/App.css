@@ -10,7 +10,7 @@ img {
   width: 50%;
 }
 
-p {
+p, h3 {
   text-align: center;
 }
 
@@ -75,4 +75,13 @@ form {
 
 input {
   margin: 2%;
+}
+
+.Box {
+  background: whitesmoke;
+  padding: 20px;
+  margin: 10px auto;
+  width: 50%;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
